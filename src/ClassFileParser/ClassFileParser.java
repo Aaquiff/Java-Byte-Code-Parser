@@ -15,7 +15,7 @@ public class ClassFileParser
         {
             try
             {
-                ClassFile cf = new ClassFile(args[0]);
+                ClassFile cf = new ClassFile("D:\\Users\\aaralk\\Documents\\NetBeansProjects\\SM-Assignment-2\\input\\ParseMe.class");
                 System.out.println(cf);
             }
             catch(IOException e)

@@ -1,5 +1,7 @@
 package ClassFileParser;
 
+import ClassFileParser.CPEntries.InvalidTagException;
+import ClassFileParser.CPEntries.CPEntry;
 import java.io.*;
 
 /**
@@ -9,6 +11,13 @@ import java.io.*;
  */
 public class ConstantPool
 {
+
+    /**
+     * @return the entries
+     */
+    public CPEntry[] getEntries() {
+        return entries;
+    }
     private CPEntry[] entries;
 
     /**
@@ -20,6 +29,7 @@ public class ConstantPool
                                                     IOException
     {
         int len = dis.readUnsignedShort();
+        System.out.println("Constant pool count " + len);
         entries = new CPEntry[len];
         int i;
 
@@ -72,24 +82,14 @@ public class ConstantPool
     {
         String s = "Index  Entry type          Entry values\n" +
                    "---------------------------------------\n";
-        for(int i = 0; i < entries.length; i++)
+        for(int i = 0; i < getEntries().length; i++)
         {
-            if(entries[i] != null)
+            if(getEntries()[i] != null)
             {
                 s += String.format("0x%02x   %-18s  %s\n",
-                    i, entries[i].getTagString(), entries[i].getValues());
+                    i, getEntries()[i].getTagString(), getEntries()[i].getValues());
             }
         }
         return s;
     }
-}
-
-/**
- * Thrown when an invalid index into the constant pool is given. That is,
- * index is zero (or negative), greater than the index of the last entry, or
- * represents the (unused) entry following a Long or Double.
- */
-class InvalidConstantPoolIndex extends ClassFileParserException
-{
-    public InvalidConstantPoolIndex(String msg) { super(msg); }
 }
