@@ -12,9 +12,6 @@ import java.io.*;
 public class ConstantPool
 {
 
-    /**
-     * @return the entries
-     */
     public CPEntry[] getEntries() {
         return entries;
     }
@@ -26,8 +23,7 @@ public class ConstantPool
      */
     public ConstantPool(DataInputStream dis) throws InvalidTagException,
                                                     InvalidConstantPoolIndex,
-                                                    IOException
-    {
+                                                    IOException {
         int len = dis.readUnsignedShort();
         //System.out.println("Constant pool count " + len);
         entries = new CPEntry[len];
@@ -61,8 +57,7 @@ public class ConstantPool
     }
 
     /** Retrieves a given constant pool entry. */
-    public CPEntry getEntry(int index) throws InvalidConstantPoolIndex
-    {
+    public CPEntry getEntry(int index) throws InvalidConstantPoolIndex{
         if(index < 0 || index > entries.length)
         {
             throw new InvalidConstantPoolIndex(String.format(
@@ -78,8 +73,7 @@ public class ConstantPool
     }
 
     /** Returns a formatted String representation of the constant pool. */
-    public String toString()
-    {
+    public String toString(){
         String s = "Index  Entry type          Entry values\n" +
                    "---------------------------------------\n";
         for(int i = 0; i < getEntries().length; i++)
@@ -92,4 +86,7 @@ public class ConstantPool
         }
         return s;
     }
+    
+    
+    
 }

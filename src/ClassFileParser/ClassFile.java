@@ -51,10 +51,10 @@ public class ClassFile
         System.out.println("Access flags : " + access_flags);
         
         this_class = dis.readUnsignedShort();
+        
+        
         ConstantClass entry = (ConstantClass) constantPool.getEntry(this_class);
         ConstantUtf8 name = (ConstantUtf8) constantPool.getEntry(entry.getNameIndex());
-        
-        
         System.out.println("Class Name "+ name.getBytes());
         //System.out.println("This classs : " + this_class);
         
@@ -103,6 +103,23 @@ public class ClassFile
     
         public String getFilename() {
         return filename;
+    }
+        
+    public String getThisClassName() throws InvalidConstantPoolIndex
+    {
+        ConstantClass entry = (ConstantClass) constantPool.getEntry(this_class);
+        ConstantUtf8 name = (ConstantUtf8) constantPool.getEntry(entry.getNameIndex());
+        return name.getBytes();
+    }
+        
+    public MethodInfo GetMethodInfo(int nameIndex) throws Exception
+    {
+        for(MethodInfo method : methods)
+        {
+            if(method.getName_index() == nameIndex)
+                return method;
+        }
+        throw new Exception("Method Info Not Found!");
     }
 
     public long getMagic() {

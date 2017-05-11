@@ -65,37 +65,23 @@ public class MethodInfo {
         }
     }
 
-    /**
-     * @return the access_flags
-     */
+
     public int getAccess_flags() {
         return access_flags;
     }
 
-    /**
-     * @return the name_index
-     */
     public int getName_index() {
         return name_index;
     }
 
-    /**
-     * @return the descriptor_index
-     */
     public int getDescriptor_index() {
         return descriptor_index;
     }
 
-    /**
-     * @return the attributes_count
-     */
     public int getAttributes_count() {
         return attributes_count;
     }
 
-    /**
-     * @return the attributes
-     */
     public AttributeInfo[] getAttributes() {
         return attributes;
     }

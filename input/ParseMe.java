@@ -13,6 +13,7 @@ public class ParseMe
   
   public boolean equals()
   {
+	  convert2();
     if ((count == count) && (time == time))
     {
       return true;
@@ -27,5 +28,27 @@ public class ParseMe
 	  equals();
 	  
 	int x = 10;  
+  }
+  
+  private int convert2()
+  {
+	  convert3();
+	  convert4();
+	  convert5();
+	  return 0;
+  }
+  
+  private void convert3()
+  { 
+  }
+  private void convert4()
+  {  
+	convert6();
+  }
+  private void convert5()
+  {  
+  }
+  private void convert6()
+  {  
   }
 }
