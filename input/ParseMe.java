@@ -8,6 +8,7 @@ public class ParseMe
   {
     count = paramInt;
     time = paramDouble;
+	convert(paramInt);
   }
   
   public boolean equals()
@@ -23,6 +24,8 @@ public class ParseMe
   
   public void convert(int y)
   {
+	  equals();
+	  
 	int x = 10;  
   }
 }

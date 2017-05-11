@@ -1,5 +1,5 @@
-
 package ClassFileParser;
+
 import java.util.*;
 
 /**
@@ -10,8 +10,21 @@ import java.util.*;
  *
  * @author David Cooper
  */
-public class Instruction
-{
+public class Instruction {
+
+    /**
+     * @return the byteLabels
+     */
+    public String[] getByteLabels() {
+        return byteLabels;
+    }
+
+    /**
+     * @param byteLabels the byteLabels to set
+     */
+    public void setByteLabels(String[] byteLabels) {
+        this.byteLabels = byteLabels;
+    }
     private int offset;
     private Opcode opcode;
     private byte[] extraBytes;
@@ -21,41 +34,38 @@ public class Instruction
      * Constructs an Instruction object, retrieving the opcode and any extra
      * bytes associated with it from a byte array at a given offset.
      */
-    public Instruction(byte[] code, int offset) throws CodeParsingException
-    {
+    public Instruction(byte[] code, int offset) throws CodeParsingException {
         this.offset = offset;
         opcode = Opcode.getOpcode(code[offset]);
-        if(opcode == null)
-        {
+        if (opcode == null) {
             throw new CodeParsingException(
-                String.format("Invalid opcode: 0x%02x", code[offset]));
+                    String.format("Invalid opcode: 0x%02x", code[offset]));
         }
 
         byteLabels = opcode.getByteLabels(code, offset);
         extraBytes = Arrays.copyOfRange(
-            code, offset + 1, offset + opcode.getSize(code, offset));
+                code, offset + 1, offset + opcode.getSize(code, offset));
     }
 
     /**
      * Returns the offset of this instruction within the original code array.
      */
-    public int getOffset()
-    {
+    public int getOffset() {
         return offset;
     }
 
     /**
-     * Returns the opcode, from which the opcode mnemonic can be retrieved
-     * (e.g. instruction.getOpcode().getMnemonic()).
+     * Returns the opcode, from which the opcode mnemonic can be retrieved (e.g.
+     * instruction.getOpcode().getMnemonic()).
      */
-    public Opcode getOpcode()
-    {
+    public Opcode getOpcode() {
         return opcode;
     }
 
-    /** Returns the number of bytes occupied by this instruction. */
-    public int getSize()
-    {
+    /**
+     * Returns the number of bytes occupied by this instruction.
+     */
+    public int getSize() {
         return 1 + extraBytes.length;
     }
 
@@ -63,18 +73,17 @@ public class Instruction
      * Returns a array containing the bytes making up this instruction, minus
      * the opcode itself.
      */
-    public byte[] getExtraBytes()
-    {
+    public byte[] getExtraBytes() {
         return Arrays.copyOf(extraBytes, extraBytes.length);
     }
 
-    /** Returns a formatted String representation of this instruction. */
-    public String toString()
-    {
+    /**
+     * Returns a formatted String representation of this instruction.
+     */
+    public String toString() {
         String s = opcode.getMnemonic();
         String operandString = getOperandString();
-        if(operandString.length() > 0)
-        {
+        if (operandString.length() > 0) {
             s += ":" + operandString;
         }
 
@@ -85,32 +94,29 @@ public class Instruction
      * Returns a formatted String representation of the extra bytes of this
      * instruction (i.e. without the opcode/mnemonic).
      */
-    public String getOperandString()
-    {
+    public String getOperandString() {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < extraBytes.length; i++)
-        {
-            if(i < byteLabels.length)
-            {
-                sb.append(byteLabels[i]).append("=");
+        for (int i = 0; i < extraBytes.length; i++) {
+            if (i < getByteLabels().length) {
+                sb.append(getByteLabels()[i]).append("=");
             }
-            sb.append(String.format("%02x ", extraBytes[i]));
+            sb.append(extraBytes[i]);
+            //sb.append(String.format("%02x ", extraBytes[i]));
         }
         return sb.toString();
     }
 }
 
+/**
+ * Thrown when the code array appears to be invalid.
+ */
+class CodeParsingException extends ClassFileParserException {
 
-/** Thrown when the code array appears to be invalid. */
-class CodeParsingException extends ClassFileParserException
-{
-    public CodeParsingException(String msg)
-    {
+    public CodeParsingException(String msg) {
         super(msg);
     }
 
-    public CodeParsingException(String msg, Throwable cause)
-    {
+    public CodeParsingException(String msg, Throwable cause) {
         super(msg, cause);
     }
 }

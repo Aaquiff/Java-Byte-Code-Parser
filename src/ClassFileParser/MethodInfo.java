@@ -6,6 +6,7 @@
 package ClassFileParser;
 
 import Attributes.AttributeInfo;
+import ClassFileParser.CPEntries.ConstantUtf8;
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -30,6 +31,18 @@ public class MethodInfo {
         for (int i = 0; i < attributes_count; i++) {
             attributes[i] =AttributeInfo.parse(dis, cp);
         }
+    }
+    
+    public String getName(ConstantPool cp) throws InvalidConstantPoolIndex
+    {
+        ConstantUtf8 entry = (ConstantUtf8)cp.getEntry(name_index) ;
+        return entry.getBytes();
+    }
+    
+    public String getDescriptor(ConstantPool cp) throws InvalidConstantPoolIndex
+    {
+        ConstantUtf8 entry = (ConstantUtf8)cp.getEntry(this.descriptor_index);
+        return entry.getBytes();
     }
     
     public String getFlag()

@@ -16,9 +16,9 @@ import java.io.IOException;
  */
 public class AttributeInfo {
 
-    private int attribute_name_index;
-    private int attribute_length;
-    private int info[];
+    protected int attribute_name_index;
+    protected int attribute_length;
+    protected int info[];
     
     public int getAttribute_length() {
         return attribute_length;
@@ -32,6 +32,12 @@ public class AttributeInfo {
         return attribute_name_index;
     }    
     
+    public String getAttribute_name(ConstantPool cp) throws Exception
+    {
+        ConstantUtf8 entry = (ConstantUtf8)cp.getEntry(attribute_name_index);
+        return entry.getBytes();
+    }
+    
     public static AttributeInfo parse(DataInputStream dis,ConstantPool cp) throws Exception                                              
     {
         int nameIndex = dis.readUnsignedShort();
@@ -41,7 +47,7 @@ public class AttributeInfo {
         switch(entry.getBytes())
         {
             
-            case "Code" : return new CodeAttribute(dis,cp,nameIndex);
+            case "Code" : return new CodeAttributeInfo(dis,cp,nameIndex);
             /*case "SourceFile" : return new SourceFileAttribute(dis,cp,nameIndex);
             case "LineNumberTable" : return new LineNumberTableAttribute(dis,cp,nameIndex);
             case "StackMapTable" : return new StackMapTableAttribute(dis,cp,nameIndex);*/
