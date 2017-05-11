@@ -29,7 +29,7 @@ public class ConstantPool
                                                     IOException
     {
         int len = dis.readUnsignedShort();
-        System.out.println("Constant pool count " + len);
+        //System.out.println("Constant pool count " + len);
         entries = new CPEntry[len];
         int i;
 
@@ -86,7 +86,7 @@ public class ConstantPool
         {
             if(getEntries()[i] != null)
             {
-                s += String.format("0x%02x   %-18s  %s\n",
+                s += String.format("%d   %-18s  %s\n",
                     i, getEntries()[i].getTagString(), getEntries()[i].getValues());
             }
         }

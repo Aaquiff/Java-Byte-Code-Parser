@@ -30,6 +30,6 @@ public class ConstantUtf8 extends CPEntry
     public String getValues()
     {
         return String.format("length=%d, bytes=\"%s\"",
-            bytes.length(), bytes);
+            getBytes().length(), getBytes());
     }
 }

@@ -5,6 +5,7 @@
  */
 package ClassFileParser;
 
+import Attributes.AttributeInfo;
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -18,8 +19,8 @@ public class FieldInfo {
     private int descriptor_index;
     private int attributes_count;
     private AttributeInfo attributes[];
-    
-    public FieldInfo(DataInputStream dis) throws IOException
+        
+    public FieldInfo(DataInputStream dis,ConstantPool cp) throws IOException, Exception
     {
         access_flags = dis.readUnsignedShort();
         name_index = dis.readUnsignedShort();
@@ -30,4 +31,20 @@ public class FieldInfo {
             attributes[i] = new AttributeInfo(dis);
         }
     }
+    
+    public String getFlag(int access_flags)
+    {
+        switch(access_flags)
+        {
+            case 1 : return "Public";
+            case 2 : return "Private";
+            case 4 : return "Protected";
+            case 8 : return "Static";
+            case 16 : return "Final";
+            case 64 : return "Volatile";
+            case 128 : return "Transient";
+            default : return null;
+        }
+    }
 }
+

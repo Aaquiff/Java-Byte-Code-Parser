@@ -1,5 +1,6 @@
 package ClassFileParser;
 
+import Attributes.AttributeInfo;
 import java.io.*;
 
 /**
@@ -9,10 +10,66 @@ import java.io.*;
  */
 public class ClassFile
 {
+    public String getFilename() {
+        return filename;
+    }
 
-    /**
-     * @return the constantPool
-     */
+    public long getMagic() {
+        return magic;
+    }
+
+    public int getMinorVersion() {
+        return minorVersion;
+    }
+
+    public int getMajorVersion() {
+        return majorVersion;
+    }
+
+    public int getAccess_flags() {
+        return access_flags;
+    }
+
+    public int getThis_class() {
+        return this_class;
+    }
+    
+    public int getSuper_class() {
+        return super_class;
+    }
+
+    public int getInterfaces_count() {
+        return interfaces_count;
+    }
+
+    public int getFields_count() {
+        return fields_count;
+    }
+
+    public FieldInfo[] getFields_info() {
+        return fields_info;
+    }
+
+    public int getMethods_count() {
+        return methods_count;
+    }
+
+    public void setMethods_count(int methods_count) {
+        this.methods_count = methods_count;
+    }
+
+    public MethodInfo[] getMethods() {
+        return methods;
+    }
+
+    public int getAttributes_count() {
+        return attributes_count;
+    }
+
+    public AttributeInfo[] getAttributes() {
+        return attributes;
+    }
+
     public ConstantPool getConstantPool() {
         return constantPool;
     }
@@ -37,57 +94,57 @@ public class ClassFile
      * only parses the header and constant pool.
      */
     public ClassFile(String filename) throws ClassFileParserException,
-                                             IOException
+                                             IOException,
+                                             Exception
     {
         DataInputStream dis =
             new DataInputStream(new FileInputStream(filename));
-
+                
         this.filename = filename;
         magic = (long)dis.readUnsignedShort() << 16 | dis.readUnsignedShort();
         minorVersion = dis.readUnsignedShort();
         majorVersion = dis.readUnsignedShort();
         constantPool = new ConstantPool(dis);
-        
+        //System.out.println("Constant Pool");
+        //System.out.println(constantPool);
         access_flags = dis.readUnsignedShort();
-        System.out.println("Access flags : " + access_flags);
+        //System.out.println("Access flags : " + access_flags);
         
         this_class = dis.readUnsignedShort();
-        System.out.println("This classs : " + this_class);
+        //System.out.println("This classs : " + this_class);
         
         super_class = dis.readUnsignedShort();   
-        System.out.println("Super class : " + super_class);
-        
+        //System.out.println("Super class : " + super_class);
+                
         interfaces_count = dis.readUnsignedShort(); 
-        System.out.println("Interfaces Count : " + interfaces_count);
-        
+        //System.out.println("Interfaces Count : " + interfaces_count);
+
         for (int i = 0; i < interfaces_count; i++) {
-            System.out.println(dis.readUnsignedShort());
+            //System.out.println(dis.readUnsignedShort());
         }
-        
+
         fields_count = dis.readUnsignedShort(); 
-        System.out.println("Fields Count : " + fields_count);
+        //System.out.println("Fields Count : " + fields_count);
+                
         fields_info = new FieldInfo[fields_count];
         for (int i = 0; i < fields_count; i++) {
-            fields_info[i] = new FieldInfo(dis);
+            fields_info[i] = new FieldInfo(dis,constantPool);
         }
         
-        System.out.println("Methods Count : " + methods_count);
         methods_count = dis.readUnsignedShort();
+        //System.out.println("Methods Count : " + methods_count);
         methods = new MethodInfo[methods_count];
         for (int i = 0; i < methods_count; i++) {
-            methods[i] = new MethodInfo(dis);
+            methods[i] = new MethodInfo(dis,constantPool);
         }
-
-
-
+        
         attributes_count = dis.readUnsignedShort();
-        System.out.println("Attributes Count : " + attributes_count);
+        //System.out.println("Attributes Count : " + attributes_count);
         attributes = new AttributeInfo[attributes_count];
         for (int i = 0; i < attributes_count; i++) {
             attributes[i] = new AttributeInfo(dis);
-            System.out.println("X : "+attributes[i].getAttribute_length());
         }
-
+        
 
     }
 
@@ -97,8 +154,7 @@ public class ClassFile
         return String.format("Filename: %s\n" +
             "Magic: 0x%08x\n" +
             "Class file format version: %d.%d\n\n" +
-            "Constant pool:\n\n%s",
-            filename, magic, majorVersion, minorVersion, getConstantPool());
+            "Constant pool:\n\n%s", getFilename(), getMagic(), getMajorVersion(), getMinorVersion(), getConstantPool());
     }
 }
 

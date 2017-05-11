@@ -5,6 +5,7 @@
  */
 package ClassFileParser;
 
+import Attributes.AttributeInfo;
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class MethodInfo {
     private int attributes_count;
     private AttributeInfo attributes[];
     
-    public MethodInfo(DataInputStream dis) throws IOException
+    public MethodInfo(DataInputStream dis, ConstantPool cp) throws IOException, Exception
     {
         access_flags = dis.readUnsignedShort();
         name_index = dis.readUnsignedShort();
@@ -27,7 +28,62 @@ public class MethodInfo {
         attributes_count = dis.readUnsignedShort();
         attributes = new AttributeInfo[attributes_count];
         for (int i = 0; i < attributes_count; i++) {
-            attributes[i] = new AttributeInfo(dis);
+            attributes[i] =AttributeInfo.parse(dis, cp);
         }
+    }
+    
+    public String getFlag()
+    {
+        switch(this.access_flags)
+        {
+            case 1 : return "Public";
+            case 2 : return "Private";
+            case 4 : return "Protected";
+            case 8 : return "Static";
+            case 16 : return "Finale";
+            case 32 : return "Synchronized";
+            case 64 : return "Bridge";
+            case 128 : return "Varragss";
+            case 256 : return "Native";
+            case 1024 : return "Abstract";
+            case 2048 : return "Strict";
+            case 4096 : return "Synthetic";
+            default : return null;
+        }
+    }
+
+    /**
+     * @return the access_flags
+     */
+    public int getAccess_flags() {
+        return access_flags;
+    }
+
+    /**
+     * @return the name_index
+     */
+    public int getName_index() {
+        return name_index;
+    }
+
+    /**
+     * @return the descriptor_index
+     */
+    public int getDescriptor_index() {
+        return descriptor_index;
+    }
+
+    /**
+     * @return the attributes_count
+     */
+    public int getAttributes_count() {
+        return attributes_count;
+    }
+
+    /**
+     * @return the attributes
+     */
+    public AttributeInfo[] getAttributes() {
+        return attributes;
     }
 }

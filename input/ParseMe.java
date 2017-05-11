@@ -21,8 +21,8 @@ public class ParseMe
     return false;
   }
   
-  public void convert()
+  public void convert(int y)
   {
-	  
+	int x = 10;  
   }
 }
