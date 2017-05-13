@@ -57,7 +57,8 @@ public abstract class ConstantRef extends CPEntry
 
     public String getValues()
     {
-        return String.format("class_index=0x%02x, name_and_type_index=0x%02x",
-            classIndex, nameAndTypeIndex);
+        //return String.format("class_index=0x%02x, name_and_type_index=0x%02x",
+        //    classIndex, nameAndTypeIndex);
+        return "class_index="+classIndex+", name_and_type_index="+nameAndTypeIndex;
     }
 }

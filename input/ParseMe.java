@@ -44,6 +44,7 @@ public class ParseMe
   private void convert4()
   {  
 	convert6();
+	HelloWorld.convert1("1");
   }
   private void convert5()
   {  

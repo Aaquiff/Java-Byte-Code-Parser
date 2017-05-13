@@ -41,6 +41,7 @@ public class ConstantClass extends CPEntry
     public String getTagString() { return "Class"; }
     public String getValues()
     {
-        return String.format("name_index=0x%02x", nameIndex);
+        //return String.format("name_index=0x%02x", nameIndex);
+        return "name_index=" + nameIndex;
     }
 }

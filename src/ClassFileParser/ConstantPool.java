@@ -80,7 +80,7 @@ public class ConstantPool
         {
             if(getEntries()[i] != null)
             {
-                s += String.format("%d   %-18s  %s\n",
+                s += String.format("%d \t %-18s  %s\n",
                     i, getEntries()[i].getTagString(), getEntries()[i].getValues());
             }
         }

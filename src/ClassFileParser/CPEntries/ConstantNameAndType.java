@@ -50,7 +50,8 @@ public class ConstantNameAndType extends CPEntry
     public String getTagString() { return "NameAndType"; }
     public String getValues()
     {
-        return String.format("name_index=0x%02x, type_index=0x%02x",
-            nameIndex, typeIndex);
+        //return String.format("name_index=0x%02x, type_index=0x%02x",
+        //    nameIndex, typeIndex);
+        return "name_index="+nameIndex+", type_index="+typeIndex;
     }
 }

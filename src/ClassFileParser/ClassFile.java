@@ -48,14 +48,14 @@ public class ClassFile
         //System.out.println("Constant Pool");
         //System.out.println(constantPool);
         access_flags = dis.readUnsignedShort();
-        System.out.println("Access flags : " + access_flags);
+        //System.out.println("Access flags : " + access_flags);
         
         this_class = dis.readUnsignedShort();
         
         
         ConstantClass entry = (ConstantClass) constantPool.getEntry(this_class);
         ConstantUtf8 name = (ConstantUtf8) constantPool.getEntry(entry.getNameIndex());
-        System.out.println("Class Name "+ name.getBytes());
+        //System.out.println("Class Name "+ name.getBytes());
         //System.out.println("This classs : " + this_class);
         
         super_class = dis.readUnsignedShort();   
@@ -119,6 +119,18 @@ public class ClassFile
             if(method.getName_index() == nameIndex)
                 return method;
         }
+
+        throw new Exception("Method Info Not Found!");
+    }
+    
+    public MethodInfo GetMethodInfo(int nameIndex,int descriptorIndex) throws Exception
+    {
+        for(MethodInfo method : methods)
+        {
+            if(method.getName_index() == nameIndex && method.getDescriptor_index() == descriptorIndex)
+                return method;
+        }
+
         throw new Exception("Method Info Not Found!");
     }
 
