@@ -5,14 +5,11 @@
  */
 package Attributes;
 
-import ClassFileParser.CPEntries.ConstantMethodRef;
+
 import ClassFileParser.ConstantPool;
 import ClassFileParser.Instruction;
-import ClassFileParser.MethodInfo;
-import ClassFileParser.Opcode;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +18,6 @@ import java.util.ArrayList;
  */
 public class CodeAttributeInfo extends AttributeInfo{
 
-    //private int attribute_name_index;
-    //private int attribute_length;
-    
     private int max_stack;
     private int max_locals;
     private int code_length;
@@ -62,7 +56,7 @@ public class CodeAttributeInfo extends AttributeInfo{
 
     }
     
-    public ArrayList<Instruction> CreateInstructionList() throws Exception
+    public ArrayList<Instruction> GetInstructionList() throws Exception
     {
         ArrayList<Instruction> insList;
         int curOffSet = 0;

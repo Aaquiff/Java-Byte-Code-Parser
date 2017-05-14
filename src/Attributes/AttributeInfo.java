@@ -48,10 +48,6 @@ public class AttributeInfo {
         {
             
             case "Code" : return new CodeAttributeInfo(dis,cp,nameIndex);
-            /*case "SourceFile" : return new SourceFileAttribute(dis,cp,nameIndex);
-            case "LineNumberTable" : return new LineNumberTableAttribute(dis,cp,nameIndex);
-            case "StackMapTable" : return new StackMapTableAttribute(dis,cp,nameIndex);*/
-            
             default     : return new AttributeInfo(dis, nameIndex);
         }
     }
@@ -66,7 +62,7 @@ public class AttributeInfo {
         //info = new int[attribute_length];
 
         for (int i = 0; i <attribute_length; i++) {
-            //CHECK THIS LATER
+
             dis.readByte();
         }
     }
@@ -74,10 +70,8 @@ public class AttributeInfo {
     {
         attribute_name_index = nameIndex;
         attribute_length = dis.readUnsignedShort() << 16 | dis.readUnsignedShort();
-        //info = new int[attribute_length];
 
         for (int i = 0; i <attribute_length; i++) {
-            //CHECK THIS LATER
             dis.readByte();
         }
 
