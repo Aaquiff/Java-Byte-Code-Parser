@@ -12,7 +12,6 @@ import java.io.*;
  */
 public class ClassFile
 {
-
     private String filename;
     private long magic;
     private int minorVersion;
@@ -53,8 +52,6 @@ public class ClassFile
         this_class = dis.readUnsignedShort();
         
         
-        ConstantClass entry = (ConstantClass) constantPool.getEntry(this_class);
-        ConstantUtf8 name = (ConstantUtf8) constantPool.getEntry(entry.getNameIndex());
         //System.out.println("Class Name "+ name.getBytes());
         //System.out.println("This classs : " + this_class);
         
@@ -98,7 +95,9 @@ public class ClassFile
         return String.format("Filename: %s\n" +
             "Magic: 0x%08x\n" +
             "Class file format version: %d.%d\n\n" +
-            "Constant pool:\n\n%s", getFilename(), getMagic(), getMajorVersion(), getMinorVersion(), getConstantPool());
+            "Constant pool:\n\n%s", getFilename(), 
+            getMagic(), getMajorVersion(), 
+            getMinorVersion(), getConstantPool());
     }
     
         public String getFilename() {
@@ -107,8 +106,8 @@ public class ClassFile
         
     public String getThisClassName() throws InvalidConstantPoolIndex
     {
-        ConstantClass entry = (ConstantClass) constantPool.getEntry(this_class);
-        ConstantUtf8 name = (ConstantUtf8) constantPool.getEntry(entry.getNameIndex());
+        ConstantClass entry = (ConstantClass)constantPool.getEntry(this_class);
+        ConstantUtf8 name = (ConstantUtf8)constantPool.getEntry(entry.getNameIndex());
         return name.getBytes();
     }
         

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author aaralk
  */
 public class CodeAttributeInfo extends AttributeInfo{
-
+    
     private int max_stack;
     private int max_locals;
     private int code_length;
@@ -26,14 +26,18 @@ public class CodeAttributeInfo extends AttributeInfo{
     private int attributes_count;
     private AttributeInfo attributes[];
     
-    public CodeAttributeInfo(DataInputStream dis,ConstantPool cp,int nameIndex) throws IOException, Exception
+    //Constructor
+    public CodeAttributeInfo(DataInputStream dis,
+            ConstantPool cp,int nameIndex) throws IOException, Exception
     {
         super();
         attribute_name_index = nameIndex;
-        attribute_length = dis.readUnsignedShort() << 16 | dis.readUnsignedShort();
+        attribute_length = dis.readUnsignedShort() 
+                << 16 | dis.readUnsignedShort();
         max_stack = dis.readUnsignedShort();
         max_locals = dis.readUnsignedShort();
-        code_length = dis.readUnsignedShort() << 16 | dis.readUnsignedShort();
+        code_length = dis.readUnsignedShort() 
+                << 16 | dis.readUnsignedShort();
         code = new byte[code_length];
 
         for (int i = 0; i < code_length; i++) {
@@ -56,6 +60,7 @@ public class CodeAttributeInfo extends AttributeInfo{
 
     }
     
+    //Gets a list of instructions by passing the code array.
     public ArrayList<Instruction> GetInstructionList() throws Exception
     {
         ArrayList<Instruction> insList;

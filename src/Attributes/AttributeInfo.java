@@ -10,66 +10,65 @@ import ClassFileParser.ConstantPool;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-/**
- *
- * @author aaralk
- */
+//This class maps directly to the attribute_info type in class file
 public class AttributeInfo {
 
     protected int attribute_name_index;
     protected int attribute_length;
     protected int info[];
     
-    public int getAttribute_length() {
-        return attribute_length;
-    }
-
-    public int[] getInfo() {
-        return info;
-    }
-
-    public int getAttribute_name_index() {
-        return attribute_name_index;
-    }    
-    
+    //Returns the attribute name by searching the given constant 
+    //pool for this attribute_name_index
     public String getAttribute_name(ConstantPool cp) throws Exception
     {
         ConstantUtf8 entry = (ConstantUtf8)cp.getEntry(attribute_name_index);
         return entry.getBytes();
     }
-    
-    public static AttributeInfo parse(DataInputStream dis,ConstantPool cp) throws Exception                                              
+    //Parses the attribute and finds out if it is  a 
+    //codeattribute and returns a code attribute object
+    public static AttributeInfo parse(
+            DataInputStream dis,
+            ConstantPool cp) 
+            throws Exception
     {
         int nameIndex = dis.readUnsignedShort();
         ConstantUtf8 entry = (ConstantUtf8)cp.getEntries()[nameIndex] ;
-        
-        //return new AttributeInfo(dis, nameIndex);
+        AttributeInfo attribute;
         switch(entry.getBytes())
         {
-            
-            case "Code" : return new CodeAttributeInfo(dis,cp,nameIndex);
-            default     : return new AttributeInfo(dis, nameIndex);
+            case "Code" : attribute = new CodeAttributeInfo(dis,cp,nameIndex);
+                            break;
+            default     : attribute = new AttributeInfo(dis, nameIndex);
+                            break;
         }
+        return attribute;
     }
+    
+    //Default Constructor
     public AttributeInfo()
     {
         
     }
+    //Constructor with DataInputStream
     public AttributeInfo(DataInputStream dis) throws IOException
     {
         attribute_name_index = dis.readUnsignedShort();
-        attribute_length = dis.readUnsignedShort() << 16 | dis.readUnsignedShort();
-        //info = new int[attribute_length];
+        attribute_length = dis.readUnsignedShort() 
+                    << 16 | dis.readUnsignedShort();
 
         for (int i = 0; i <attribute_length; i++) {
 
             dis.readByte();
         }
     }
+    
+    //Constructor with DataInputStream and nameindex. 
+    //Used when the nameIndex has already been read by the parse method
     public AttributeInfo(DataInputStream dis,int nameIndex) throws IOException
     {
         attribute_name_index = nameIndex;
-        attribute_length = dis.readUnsignedShort() << 16 | dis.readUnsignedShort();
+        attribute_length = dis.readUnsignedShort() 
+                            << 16 | dis.readUnsignedShort();
 
         for (int i = 0; i <attribute_length; i++) {
             dis.readByte();

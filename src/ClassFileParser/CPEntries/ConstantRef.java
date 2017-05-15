@@ -48,17 +48,25 @@ public abstract class ConstantRef extends CPEntry
             (ConstantNameAndType)cp.getEntry(nameAndTypeIndex);
     }
 
-    public int getClassIndex()          { return classIndex; }
-    public int getNameAndTypeIndex()    { return nameAndTypeIndex; }
+    public int getClassIndex()          
+    { return classIndex; }
+    public int getNameAndTypeIndex()    
+    { return nameAndTypeIndex; }
 
-    public String getClassName()        { return classEntry.getName(); }
-    public String getName()             { return getNameAndTypeEntry().getName(); }
-    public String getType()             { return getNameAndTypeEntry().getType(); }
+    public String getClassName()        
+    { return classEntry.getName(); }
+    public String getName()             
+    { return getNameAndTypeEntry().getName(); }
+    public String getType()             
+    { return getNameAndTypeEntry().getType(); }
 
     public String getValues()
     {
         //return String.format("class_index=0x%02x, name_and_type_index=0x%02x",
         //    classIndex, nameAndTypeIndex);
-        return "class_index="+classIndex+", name_and_type_index="+nameAndTypeIndex;
+        return "class_index="
+                +classIndex
+                +", name_and_type_index="
+                +nameAndTypeIndex;
     }
 }

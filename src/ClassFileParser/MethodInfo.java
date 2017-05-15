@@ -6,9 +6,11 @@
 package ClassFileParser;
 
 import Attributes.AttributeInfo;
+import Attributes.CodeAttributeInfo;
 import ClassFileParser.CPEntries.ConstantUtf8;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,6 +35,16 @@ public class MethodInfo {
         }
     }
     
+    public ArrayList<CodeAttributeInfo> GetCodeAttributes(ConstantPool cp) throws Exception
+    {
+        ArrayList<CodeAttributeInfo> codeAttributes = new ArrayList<CodeAttributeInfo>();
+        for (int i = 0; i < attributes_count; i++) {
+            if(attributes[i].getAttribute_name(cp) == "Code")
+                codeAttributes.add((CodeAttributeInfo)attributes[i]);
+        }
+        return codeAttributes;
+    }
+    
     public String getName(ConstantPool cp) throws InvalidConstantPoolIndex
     {
         ConstantUtf8 entry = (ConstantUtf8)cp.getEntry(name_index) ;
@@ -42,7 +54,9 @@ public class MethodInfo {
     public String getDescriptor(ConstantPool cp) throws InvalidConstantPoolIndex
     {
         ConstantUtf8 entry = (ConstantUtf8)cp.getEntry(this.descriptor_index);
-        return entry.getBytes();
+        String bytes = entry.getBytes();
+
+        return bytes;
     }
     
     public String getFlag()

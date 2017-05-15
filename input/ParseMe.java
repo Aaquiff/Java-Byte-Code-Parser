@@ -13,7 +13,9 @@ public class ParseMe
   
   public boolean equals()
   {
-	  convert2();
+	  convert2(1);
+	  Employee emp = new Salary();
+	  emp.computePay();
 	  A a = new A();
 	  
     if ((count == count) && (time == time))
@@ -32,7 +34,7 @@ public class ParseMe
 	int x = 10;  
   }
   
-  private int convert2()
+  private int convert2(int x)
   {
 	  convert3();
 	  convert3();
@@ -43,7 +45,7 @@ public class ParseMe
   
   private void convert3()
   { 
-	convert2();
+	convert2(1);
 	convert4();
   }
   private void convert4()
